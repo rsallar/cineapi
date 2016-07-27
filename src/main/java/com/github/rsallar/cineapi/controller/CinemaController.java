@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.github.rsallar.cineapi.sraping.ElPais;
+import com.github.rsallar.cineapi.scraping.ElPais;
 
 @RestController
 @RequestMapping("cinemas")

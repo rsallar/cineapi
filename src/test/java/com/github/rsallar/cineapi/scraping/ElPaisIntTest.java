@@ -5,7 +5,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.github.rsallar.cineapi.sraping.ElPais;
+import com.github.rsallar.cineapi.scraping.ElPais;
 
 public class ElPaisIntTest {
 	Logger logger = LoggerFactory.getLogger(ElPaisIntTest.class);
@@ -20,7 +20,7 @@ public class ElPaisIntTest {
 	public void test1(){
 		//logger.info("{}", elPais.getCinemas().size());
 		
-		elPais.test();
+		elPais.getInfo();
 	}
 
 }

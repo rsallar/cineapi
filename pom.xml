@@ -20,6 +20,7 @@
 		<!-- <main.basedir>${basedir}/../..</main.basedir> -->
 		<jetty.version>9.3.0.v20150612</jetty.version>
 		<jsr305.version>3.0.1</jsr305.version>
+		<lombok.version>1.16.10</lombok.version>
 	</properties>
 
 	<dependencies>
@@ -45,6 +46,12 @@
 			<artifactId>springfox-swagger-ui</artifactId>
 			<version>2.5.0</version>
 		</dependency>
+		
+		<dependency>
+		    <groupId>org.projectlombok</groupId>
+		    <artifactId>lombok</artifactId>
+		    <version>${lombok.version}</version>
+	</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
 <dependency>
