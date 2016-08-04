@@ -22,7 +22,7 @@ public class AvuiTest {
 
 	@Test
 	public void test1(){	
-		List<Cinema> cinemas = avui.getInfo().get();
+		List<Cinema> cinemas = avui.getInfo();
 		for(Cinema c: cinemas){
 			log.info("#################");
 			log.info("cinema: {} ", c.getName());
@@ -34,5 +34,6 @@ public class AvuiTest {
 		}
 		
 	}
+	
 
 }

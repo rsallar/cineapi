@@ -9,12 +9,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Component;
 
 import com.github.rsallar.cineapi.model.Cinema;
@@ -29,21 +29,25 @@ public class Avui {
 	private static int TIMEOUT = 20000;
 	private static String LINK = "http://www.elpuntavui.cat";
 	
-	public Optional<List<Cinema>> getInfo(){
-		List<Cinema> cinemas = null;
+	
+	/**
+	 * Gets a list of cinemas with movie and sessions from news site "www.elpuntavui.cat".
+	 * @return
+	 */
+	@CacheEvict(value = "cinema", beforeInvocation = false)
+	public List<Cinema> getInfo(){
+		List<Cinema> cinemas = Lists.newArrayList();
 		try {
-			cinemas = getCinemas();
-			//fillWithMovies(cinemas);
-		} catch (IOException e) {
-			log.error("Can't get cinemas from ElPais", e);
+			cinemas = getPopulatedCinemas();
+		} catch (Throwable e) {
+			log.error("Can't get cinemas from www.elpuntavui.cat", e);
 		}
 		
-		return Optional.ofNullable(cinemas);
-		
-	
+		return cinemas;
+			
 	}
 	
-	private List<Cinema> getCinemas() throws IOException {
+	private List<Cinema> getPopulatedCinemas() throws IOException {
 		List<Cinema> cinemas;
 		Document doc = Jsoup.connect("http://www.elpuntavui.cat/cinema/locals/barcelona.html").timeout(TIMEOUT).get();
 		
@@ -67,7 +71,6 @@ public class Avui {
 
 			log.info("scrapping cinema {} of {}. name: {}", i+1, cinemas.size(), cinemas.get(i).getName());
 			
-			
 			Document doc = Jsoup.connect(links.get(i)).timeout(TIMEOUT).get();
 			
 			List<String> dateLinks =  doc.select(".dies-projeccions li.dies a").stream().map(e-> e.attr("href")).filter(o-> o!=null && !o.equals("#")).collect(Collectors.toList());
@@ -77,7 +80,7 @@ public class Avui {
 			for(int j=0; j<dateLinks.size(); j++){
 				String dateLink = dateLinks.get(j);
 				String dateTxt= dateLink.substring(dateLink.indexOf("dia=")+4);
-				if(j>0){
+				if(j>0){ //we already have first sessions info.
 					doc = Jsoup.connect(LINK +dateLink).timeout(TIMEOUT).get();
 				}
 
@@ -102,7 +105,12 @@ public class Avui {
 		return cinemas;
 	}
 	
-	
+	/**
+	 * 
+	 * @param sessionsStr strig like "15.40 - 17.50 - 20.00"
+	 * @param dateTxt date like dd/MM/yyyy
+	 * @return
+	 */
 	private List<Date> parseSessions(String sessionsStr, String dateTxt){
 		
 		sessionsStr = sessionsStr.replaceAll(" ", "");

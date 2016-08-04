@@ -7,9 +7,6 @@ spring:
     data:
         mongodb:
             uri: ${H_MONGODB}
-
-logging:
-    level:
-        ROOT: INFO
-        org.springframework.web: INFO
-        com.github.rsallar.cineapi: DEBUG
+    cache:
+        caffeine:
+            spec:  maximumSize=200,refreshAfterWrite=24h

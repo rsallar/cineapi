@@ -2,18 +2,16 @@ server:
     port: 8080
  
 spring:
-    profiles:
-        active: dev
+    profiles: dev
+
     data:
         mongodb:
             host: localhost
             port: 27017
             database: devBookshelfDB
-
 logging:
     level:
-        ROOT: DEBUG
-        org.springframework.web: INFO
+        org.springframework.web: DEBUG
         com.github.rsallar.cineapi: DEBUG
-        
+        org.springframework.cache: TRACE
         
