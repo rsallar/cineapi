@@ -1,15 +1,15 @@
 server:
-    port: 8080
+    port: ${PORT:8080}
  
 spring:
     profiles:
-        active: dev
+        active: prod
     data:
         mongodb:
             uri: ${H_MONGODB}
 
 logging:
     level:
-        ROOT: DEBUG
+        ROOT: INFO
         org.springframework.web: INFO
         com.github.rsallar.cineapi: DEBUG

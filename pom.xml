@@ -114,6 +114,7 @@
 					<appName>cinemaapi</appName>
 					<includeTarget>false</includeTarget>
 					<includes>
+						<include>Procfile</include>
 						<include>target/cinemaapi.jar</include>
 					</includes>
 					
