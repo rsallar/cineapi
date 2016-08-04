@@ -1,13 +1,20 @@
 package com.github.rsallar.cineapi.model;
 
-import lombok.Builder;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.data.annotation.Id;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 
 @Data
-@Builder
 public class Cinema {
-	
+	@Id @JsonIgnore
+    private String id;
 	private String name;
-	private String link;
+
+	private List<Movie> movies = new ArrayList<>();
 	
 }
